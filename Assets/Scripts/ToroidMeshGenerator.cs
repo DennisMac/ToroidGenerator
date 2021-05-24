@@ -8,29 +8,75 @@ using UnityEngine;
 
 public class ToroidMeshGenerator : MonoBehaviour
 {
+    [SerializeField]
+    GameObject[] spherePrefabs;
+    GameObject[] spheres = new GameObject[3];
     Mesh mesh;
     Vector3[] vertices;
     int[] triangles;
-    LineRenderer lineRenderer;
+    //LineRenderer lineRenderer;
     [SerializeField]
     Material material;
+
+    #region public just so we can see them in inspector for debugging
+    public Vector3 center;
+    public float rAxis;
+    public float rCrossSection;
+    public Vector3 start;
+    public Vector3 finish;
+    #endregion public just so we can see them in inspector for debugging
+
     // Start is called before the first frame update
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
+        //lineRenderer = GetComponent<LineRenderer>();
+
+        spheres[0] = Instantiate(spherePrefabs[0], Vector3.zero, Quaternion.identity);
+        spheres[1] = Instantiate(spherePrefabs[1], Vector3.forward, Quaternion.identity);
+        spheres[2] = Instantiate(spherePrefabs[2], Vector3.right, Quaternion.identity);
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshRenderer>().material = material;
-        CreateShape(new Vector3(0,0,1), 4f, 1f, new Vector3(2.5f,1,1), new Vector3(-1,3,0f));
-        UpdateMesh();
+       // RandomArc();
+        
     }
-
-    private void UpdateMesh()
+    public void RandomArc()
     {
+        center = new Vector3(UnityEngine.Random.Range(-2f, 2f), UnityEngine.Random.Range(-2f, 2f), UnityEngine.Random.Range(-2f, 2f));
+        start = new Vector3(UnityEngine.Random.Range(-2f, 2f), UnityEngine.Random.Range(-2f, 2f), UnityEngine.Random.Range(-2f, 2f));
+        finish = new Vector3(UnityEngine.Random.Range(-2f, 2f), UnityEngine.Random.Range(-2f, 2f), UnityEngine.Random.Range(-2f, 2f));
+        rAxis = (start - center).magnitude;
+        rCrossSection = rCrossSection / 4f;
+        UpdateMesh(center, rAxis, rCrossSection, start, finish );
+
+    }
+    public void UpdateMesh(Vector3 center, float rAxis, float rCrossSection, Vector3 start, Vector3 finish, Plane? _planeOfArc = null)
+    {
+        this.center = center;
+        this.start = start;
+        this.finish = finish;
+        this.rAxis = rAxis;
+        this.rCrossSection = rCrossSection;
+
+        rAxis = (start - center).magnitude;
+        rCrossSection = rAxis / 4f;
+
+        CreateShape(center, rAxis, rCrossSection, start, finish);
+        spheres[0].transform.position = center;
+        spheres[1].transform.position = start;
+        spheres[2].transform.position = finish;
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            RandomArc();
+        }
+        //UpdateMesh(new Vector3(0, 0, 1), 4f, 1f, new Vector3(2.5f, 1, 1), new Vector3(-1, 3, 0f));
+        UpdateMesh(center, rAxis, rCrossSection, start, finish);
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
-
     }
     /// <summary>
     /// Create a section of a toroid 
@@ -40,29 +86,29 @@ public class ToroidMeshGenerator : MonoBehaviour
     /// <param name="r">cross section of area revolved</param>
     /// <param name="start"></param>
     /// <param name="finish"></param>
-    private void CreateShape(Vector3 center, float R, float r, Vector3 start, Vector3 finish, Plane? _planeOfArc = null )
+    private void CreateShape(Vector3 center, float R, float r, Vector3 start, Vector3 finish, Plane? _planeOfArc = null)
     {
         //If the three points do not define a plane, we need the plane identified (happens at 180 and 360)
-        Plane planeOfArc = (Plane)((_planeOfArc == null) ? new Plane(center, start, finish):_planeOfArc);        
+        Plane planeOfArc = (Plane)((_planeOfArc == null) ? new Plane(center, start, finish) : _planeOfArc);
 
         Plane planeOfStartEndCap = new Plane(Vector3.Cross(start - center, planeOfArc.normal).normalized, start);
         Plane planeofFinishEndCap = new Plane(Vector3.Cross(finish - center, planeOfArc.normal).normalized, finish);
 
         R = (start - center).magnitude;
         transform.position = center;
-        transform.rotation = Quaternion.LookRotation(planeOfArc.normal, (start-center));
+        transform.rotation = Quaternion.LookRotation(planeOfArc.normal, (start - center));
         transform.Rotate(new Vector3(0, 0, 90f));
         int st = 15;                    //number of times we draw a ring
         int sl = 15;                    //number of subdivisions of the ring
 
         float phi = 0.0f;
-        float dp = (2 * Mathf.PI) / sl; 
+        float dp = (2 * Mathf.PI) / sl;
         float theta = 0.0f;
 
         float angleOfBend = 180f;
         angleOfBend = Vector3.Angle(finish - center, start - center);
 
-        float dt = (angleOfBend * Mathf.PI/180f) / (st-1);
+        float dt = (angleOfBend * Mathf.PI / 180f) / (st - 1);
 
         List<Vector3> vertList = new List<Vector3>();
         for (int stack = 0; stack < st; stack++) //for stack = 0, st do
@@ -81,9 +127,9 @@ public class ToroidMeshGenerator : MonoBehaviour
         int i2 = 0;
         int i3 = 0;
         int i4 = 0;
-        for (int stack = 0; stack < st-1; stack++) //for stack = 0, st do
+        for (int stack = 0; stack < st - 1; stack++) //for stack = 0, st do
         {
-            for (int slice = 0; slice < sl-1; slice++)
+            for (int slice = 0; slice < sl - 1; slice++)
             {
                 if (stack == 0)
                 {
@@ -127,7 +173,7 @@ public class ToroidMeshGenerator : MonoBehaviour
         }
         vertices = vertList.ToArray();
         triangles = triangleList.ToArray();
-        lineRenderer.positionCount = vertList.Count;
-        lineRenderer.SetPositions(vertList.ToArray());
+        //lineRenderer.positionCount = vertList.Count;
+        //lineRenderer.SetPositions(vertList.ToArray());
     }
 }
