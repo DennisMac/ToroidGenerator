@@ -193,4 +193,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a809a7dcc7d4545409610d7a8ce45095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
+  spherePrefabs:
+  - {fileID: 5690516744497655782, guid: de211cbab9a37774e8bfb8b1d0f6a388, type: 3}
+  - {fileID: 459534822560577083, guid: 39a20c15aecc2e543ad520fc6622d197, type: 3}
+  - {fileID: 3963495716091328355, guid: b6d0dd0d1f8f61847b73fb1b420451b8, type: 3}
+  material: {fileID: 2100000, guid: a638ea6466c4a2d4fa59a15059ef653b, type: 2}
+  center: {x: 0, y: 0, z: 0}
+  rAxis: 0
+  rCrossSection: 0
+  start: {x: 0, y: 0, z: 0}
+  finish: {x: 0, y: 0, z: 0}

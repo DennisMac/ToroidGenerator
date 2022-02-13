@@ -957,42 +957,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: material
-      value: 
-      objectReference: {fileID: 2100000, guid: a638ea6466c4a2d4fa59a15059ef653b, type: 2}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spheres.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spheres.Array.data[0]
-      value: 
-      objectReference: {fileID: 5690516744497655782, guid: de211cbab9a37774e8bfb8b1d0f6a388, type: 3}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spheres.Array.data[1]
-      value: 
-      objectReference: {fileID: 459534822560577083, guid: 39a20c15aecc2e543ad520fc6622d197, type: 3}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spheres.Array.data[2]
-      value: 
-      objectReference: {fileID: 3963495716091328355, guid: b6d0dd0d1f8f61847b73fb1b420451b8, type: 3}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spherePrefabs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spherePrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 5690516744497655782, guid: de211cbab9a37774e8bfb8b1d0f6a388, type: 3}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spherePrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 459534822560577083, guid: 39a20c15aecc2e543ad520fc6622d197, type: 3}
-    - target: {fileID: 1758435843416484008, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
-      propertyPath: spherePrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 3963495716091328355, guid: b6d0dd0d1f8f61847b73fb1b420451b8, type: 3}
     - target: {fileID: 4669713444772974729, guid: 041f69ff0bd290943912b35fab52bcf5, type: 3}
       propertyPath: m_RootOrder
       value: 2
